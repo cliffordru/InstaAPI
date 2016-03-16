@@ -17,10 +17,9 @@ namespace InstaAPI.Controllers
     {
         private readonly IInstagramApiService _instagramApiService;
        
-        public PostsController()
-        {
-            // TODO:Use DI in Ctor
-            _instagramApiService = new InstagramApiService();
+        public PostsController(IInstagramApiService instagramservice)
+        {            
+            _instagramApiService = instagramservice;
         }
 
         /// <summary>

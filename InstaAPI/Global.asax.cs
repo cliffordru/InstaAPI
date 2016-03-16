@@ -18,6 +18,7 @@ namespace InstaAPI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperWebConfiguration.Configure();
+            AutofacBootstrapper.RegisterAutofac();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
