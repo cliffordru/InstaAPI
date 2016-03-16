@@ -3,7 +3,7 @@
 namespace InstaAPI.Controllers
 {
     [Authorize]
-    public abstract class BaseController : ApiController
+    public abstract class BaseApiController : ApiController
     {
     }
 }

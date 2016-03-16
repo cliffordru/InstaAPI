@@ -224,14 +224,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Filters\ValidateModelAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\AutofacBootstrapper.cs" />
+    <Compile Include="Helpers\AutofacWebConfiguration.cs" />
     <Compile Include="Helpers\AutoMapperWebConfiguration.cs" />
     <Compile Include="Helpers\ConfigurationData.cs" />
     <Compile Include="Models\AccountsBindingModels.cs" />
@@ -311,6 +311,10 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InstaAPI.Context\InstaAPI.Context.csproj">
+      <Project>{011C0047-66D2-4A15-B14A-7F028BD3D3CA}</Project>
+      <Name>InstaAPI.Context</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InstaAPI.Services\InstaAPI.Services.csproj">
       <Project>{c887a043-8f4c-4286-8dd6-dcd8b6e9e972}</Project>
       <Name>InstaAPI.Services</Name>

@@ -5,6 +5,7 @@ using InstaAPI.Services.BusinessLogicServices;
 using InstaAPI.Services.BusinessLogicServices.Interfaces;
 using System.Collections.Generic;
 using System.Web.Http;
+using InstaAPI.Services.CommandModel;
 
 namespace InstaAPI.Controllers
 {
@@ -13,13 +14,16 @@ namespace InstaAPI.Controllers
     /// </summary>
     [Authorize]
     [RoutePrefix("api/posts")]
-    public class PostsController : BaseController
+    public class PostsController : BaseApiController
     {
         private readonly IInstagramApiService _instagramApiService;
-       
-        public PostsController(IInstagramApiService instagramservice)
-        {            
+        private readonly IFavoriteCreationService _favoriteCreationService;
+
+
+        public PostsController(IInstagramApiService instagramservice, IFavoriteCreationService favoriteCreationService)
+        {
             _instagramApiService = instagramservice;
+            _favoriteCreationService = favoriteCreationService;
         }
 
         /// <summary>
@@ -52,7 +56,7 @@ namespace InstaAPI.Controllers
 
             //var id = model.InstagramId;
             //var userid = HttpContext.Current.User.Identity.GetUserId();
-            
+            _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() {Id = 1});
 
             return Ok();
         }

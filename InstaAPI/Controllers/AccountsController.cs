@@ -15,7 +15,7 @@ namespace InstaAPI.Controllers
     /// API endpoints to manage your user account
     /// </summary>    
     [RoutePrefix("api/accounts")]
-    public class AccountsController : BaseController
+    public class AccountsController : BaseApiController
     {
         private ApplicationUserManager _userManager;
 
