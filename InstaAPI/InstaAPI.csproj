@@ -234,6 +234,8 @@
     <Compile Include="Helpers\AutofacWebConfiguration.cs" />
     <Compile Include="Helpers\AutoMapperWebConfiguration.cs" />
     <Compile Include="Helpers\ConfigurationData.cs" />
+    <Compile Include="Models\PostsFavoriteMetricViewModel.cs" />
+    <Compile Include="Models\PostsFavoriteViewModel.cs" />
     <Compile Include="Models\AccountsBindingModels.cs" />
     <Compile Include="Models\AccountsViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />

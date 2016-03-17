@@ -32,6 +32,7 @@ namespace InstaAPI.Helpers
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly()).InstancePerRequest();
             builder.RegisterType<InstagramApiService>().As<IInstagramApiService>().InstancePerRequest();
             builder.RegisterType<FavoriteCreationService>().As<IFavoriteCreationService>().InstancePerRequest();
+            builder.RegisterType<FavoriteQueryService>().As<IFavoriteQueryService>().InstancePerRequest();
             builder.RegisterType<FavoriteRepository>().As<IFavoriteRepository>().InstancePerRequest();
             builder.RegisterType<DbContextScopeFactory>().As<IDbContextScopeFactory>().InstancePerRequest();
             builder.RegisterType<AmbientDbContextLocator>().As<IAmbientDbContextLocator>().InstancePerRequest();            

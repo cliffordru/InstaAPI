@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogicServices\FavoriteQueryService.cs" />
+    <Compile Include="BusinessLogicServices\Interfaces\IFavoriteQueryService.cs" />
     <Compile Include="CommandModel\FavoriteCreationSpec.cs" />
     <Compile Include="BusinessLogicServices\InstagramApiService.cs" />
     <Compile Include="BusinessLogicServices\FavoriteCreationService.cs" />
@@ -61,6 +63,7 @@
     <Compile Include="DatabaseContext\FavoriteManagementDbContext.cs" />
     <Compile Include="DomainModel\BaseDomain.cs" />
     <Compile Include="DomainModel\Instragram\InstaModel.cs" />
+    <Compile Include="DomainModel\FavoriteMetric.cs" />
     <Compile Include="DomainModel\Post.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DomainModel\Favorite.cs" />

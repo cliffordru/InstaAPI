@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
 using InstaAPI.Services.CommandModel;
+using InstaAPI.Services.DomainModel;
 using Microsoft.AspNet.Identity;
 
 namespace InstaAPI.Controllers
@@ -20,12 +21,14 @@ namespace InstaAPI.Controllers
     {
         private readonly IInstagramApiService _instagramApiService;
         private readonly IFavoriteCreationService _favoriteCreationService;
+        private readonly IFavoriteQueryService _favoriteQueryService;
 
 
-        public PostsController(IInstagramApiService instagramservice, IFavoriteCreationService favoriteCreationService)
+        public PostsController(IInstagramApiService instagramservice, IFavoriteCreationService favoriteCreationService, IFavoriteQueryService favoriteQueryService)
         {
             _instagramApiService = instagramservice;
             _favoriteCreationService = favoriteCreationService;
+            _favoriteQueryService = favoriteQueryService;
         }
 
         /// <summary>
@@ -56,6 +59,24 @@ namespace InstaAPI.Controllers
             _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() {UserId = HttpContext.Current.User.Identity.GetUserId(), InstagramId = model.InstagramId, TagName = model.TagName});
 
             return Ok(); //TODO:201 on success
+        }
+
+        [Route("favorites")]
+        public IHttpActionResult GetFavorites()
+        {
+            var result = _favoriteQueryService.GetFavorites(HttpContext.Current.User.Identity.GetUserId());
+            var vm = Mapper.Map<List<Favorite>>(result);
+
+            return Json(vm);
+        }
+
+        [Route("favorites/metrics")]
+        public IHttpActionResult GetMetrics()
+        {
+            var result = _favoriteQueryService.GetMetrics(HttpContext.Current.User.Identity.GetUserId());
+            var vm = Mapper.Map<List<FavoriteMetric>>(result);
+
+            return Json(vm);
         }
 
     }
