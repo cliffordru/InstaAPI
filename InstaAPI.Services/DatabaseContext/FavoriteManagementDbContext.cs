@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data.Entity;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using InstaAPI.Services.DomainModel;
 
 namespace InstaAPI.Services.DatabaseContext
@@ -14,6 +9,7 @@ namespace InstaAPI.Services.DatabaseContext
     {
         // Map our 'Favorite' model by convention
         public DbSet<Favorite> Favorites { get; set; }
+        public DbSet<Post> Posts { get; set; }
 
         public FavoriteManagementDbContext() : base(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString())
 		{ }

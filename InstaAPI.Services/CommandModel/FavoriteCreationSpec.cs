@@ -1,3 +1,4 @@
+using System;
 using System.Data.Entity.Migrations.Model;
 
 namespace InstaAPI.Services.CommandModel
@@ -11,7 +12,10 @@ namespace InstaAPI.Services.CommandModel
 
         public void Validate()
         {
-            //TODO: Add Validation Logic
+            if(string.IsNullOrEmpty(InstagramId))
+                throw new ArgumentNullException(nameof(InstagramId));
+            if (string.IsNullOrEmpty(TagName))
+                throw new ArgumentNullException(nameof(TagName));
         }
     }
 }

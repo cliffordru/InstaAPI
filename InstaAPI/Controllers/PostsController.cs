@@ -60,7 +60,7 @@ namespace InstaAPI.Controllers
             //var userid = HttpContext.Current.User.Identity.GetUserId();
             _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() {UserId = HttpContext.Current.User.Identity.GetUserId(), InstagramId = model.InstagramId, TagName = model.TagName});
 
-            return Ok();
+            return Ok(); //TODO:201 on success
         }
 
     }

@@ -29,29 +29,43 @@ namespace InstaAPI.Services.BusinessLogicServices
 
             favoriteToCreate.Validate();
 
-            // TODO: Call instagram to get URL and Instagram iUserId, UserName
-            var instaPostData = _instagramApiService.GetPost(favoriteToCreate.InstagramId);
-
-            // TODO: Post Entity will have InstagramId, iUserId, UserName, Url and insert first (PK InstagramId - consider surrogate key)
-
-            // TODO: Favorite Entity will have aUserId, InstagramId, TagName (FK to Post on InstagramId)
-
             using (var dbContextScope = _dbContextScopeFactory.Create())
             {
                 // Build domain models
-                //var post = new Post()
+                var favorite = _favoritesRepository.Get(favoriteToCreate.UserId, favoriteToCreate.InstagramId,
+                    favoriteToCreate.TagName);
 
-                var favorite = new Favorite()
+                //TODO: If exists consider returning 409 
+                if (favorite == null)
                 {
-                    UserId = favoriteToCreate.UserId,
-                    InstagramId = favoriteToCreate.InstagramId,
-                    TagName = favoriteToCreate.TagName,
-                    CreatedOn = DateTime.UtcNow
-                };
+                    var post = _favoritesRepository.Get(favoriteToCreate.InstagramId);
+                    
+                    if (post == null)
+                    {
+                        var instaPostData = _instagramApiService.GetPost(favoriteToCreate.InstagramId);
+                        post = new Post()
+                        {
+                            InstagramId = instaPostData.Data.Id,
+                            InstagramUserId = instaPostData.Data.User.Id,
+                            InstagramUserName = instaPostData.Data.User.Username,
+                            Url = instaPostData.Data.Link,
+                            CreatedOn = DateTime.Now
+                        };
+                    }
 
-                // Persist
-                _favoritesRepository.Add(favorite);
-                dbContextScope.SaveChanges();
+                    favorite = new Favorite()
+                    {
+                        UserId = favoriteToCreate.UserId,
+                        InstagramId = favoriteToCreate.InstagramId,
+                        TagName = favoriteToCreate.TagName,
+                        Post = post,
+                        CreatedOn = DateTime.UtcNow
+                    };
+
+                    // Persist
+                    _favoritesRepository.Add(favorite);
+                    dbContextScope.SaveChanges();
+                }
             }
         }
     }
