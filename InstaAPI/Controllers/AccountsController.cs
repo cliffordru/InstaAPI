@@ -44,17 +44,11 @@ namespace InstaAPI.Controllers
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
-        //[Route("token")]
-        //[HttpDelete]
-        //public IHttpActionResult Logout()
-        //{
-        //    Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
-        //    return Ok();
-        //}
-
         // POST api/Account/Login
         /// <summary>
-        /// Get an access token for the API.  Requires the parameters to be sent using x-www-form-urlencoded. 
+        /// Get an access token for the API.  
+        /// Requires the parameters to be sent using x-www-form-urlencoded. 
+        /// Parameters -> username, password
         /// </summary>
         /// <param name="grant_type">valid value is password</param>
         /// <param name="username"></param>
@@ -72,7 +66,8 @@ namespace InstaAPI.Controllers
 
         // POST api/Account/Register
         /// <summary>
-        /// Register an account for the API
+        /// Register an account for the API.  
+        /// <para />Parameters -> email, password, confirmpassword
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>

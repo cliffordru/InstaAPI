@@ -46,7 +46,8 @@ namespace InstaAPI.Controllers
         }
 
         /// <summary>
-        /// Save a post as a favorite. Requires access_token in header.
+        /// Save a post as a favorite. Requires access_token in header. 
+        /// Parameters -> instagram_id, tag_name
         /// </summary>        
         /// <returns></returns>
         [Route("favorite")]
