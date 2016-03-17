@@ -32,11 +32,11 @@ namespace InstaAPI.Controllers
         /// Search for posts by tag.  Requires access_token in header.
         /// </summary>        
         /// <returns></returns>
-        [Route("tag/{tagname}")]
+        [Route("tag/{tag_name}")]
         [ValidateModel]
         public IHttpActionResult Get([FromUri]PostsTagBindingModel model)
         {            
-            var result = _instagramApiService.GetPostsByTag(model.TagName);
+            var result = _instagramApiService.GetPostsByTag(model.tag_name);
             var vm = Mapper.Map<List<PostsTagViewModel>>(result.Data);
 
             return Json(vm);
@@ -52,12 +52,7 @@ namespace InstaAPI.Controllers
         {
             // TODO: See AccountController.Register for return type
             // TODO: Map model to domain DTO automapper
-
-            //var result = _instagramApiService.GetPostsByTag(model.Tag);
-            //var vm = Mapper.Map<List<PostsTagViewModel>>(result.Data);
-
-            //var id = model.InstagramId;
-            //var userid = HttpContext.Current.User.Identity.GetUserId();
+            
             _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() {UserId = HttpContext.Current.User.Identity.GetUserId(), InstagramId = model.InstagramId, TagName = model.TagName});
 
             return Ok(); //TODO:201 on success

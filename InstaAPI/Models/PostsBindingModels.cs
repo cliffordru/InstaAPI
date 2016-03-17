@@ -11,9 +11,10 @@ namespace InstaAPI.Models
         /// The tag name
         /// </summary>
         [Required]
-        [Display(Name = "tag_name")]
-        [JsonProperty(PropertyName = "tag_name")]
-        public string TagName { get; set; }        
+        //[Display(Name = "tag_name")]
+        //[JsonProperty(PropertyName = "tag_name")]
+        // ReSharper disable once InconsistentNaming
+        public string tag_name { get; set; }        
     }
 
     public class PostsFavoriteBindingModel
