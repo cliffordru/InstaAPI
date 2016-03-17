@@ -54,7 +54,7 @@ namespace InstaAPI.Controllers
 
         // POST api/Account/Login
         /// <summary>
-        /// Login to the API.  Requires the parameters to be sent using x-www-form-urlencoded. 
+        /// Get an access token for the API.  Requires the parameters to be sent using x-www-form-urlencoded. 
         /// </summary>
         /// <param name="grant_type">valid value is password</param>
         /// <param name="username"></param>
@@ -72,7 +72,7 @@ namespace InstaAPI.Controllers
 
         // POST api/Account/Register
         /// <summary>
-        /// Register for the API
+        /// Register an account for the API
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>

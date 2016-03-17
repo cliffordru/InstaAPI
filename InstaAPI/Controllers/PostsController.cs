@@ -61,6 +61,10 @@ namespace InstaAPI.Controllers
             return Ok(); //TODO:201 on success
         }
 
+        /// <summary>
+        /// Get a list of your favorites. Requires access_token in header.
+        /// </summary>
+        /// <returns></returns>
         [Route("favorites")]
         public IHttpActionResult GetFavorites()
         {
@@ -70,6 +74,10 @@ namespace InstaAPI.Controllers
             return Json(vm);
         }
 
+        /// <summary>
+        /// Get the number of posts saved by tag name. Requires access_token in header.
+        /// </summary>
+        /// <returns></returns>
         [Route("favorites/metrics")]
         public IHttpActionResult GetMetrics()
         {

@@ -16,8 +16,7 @@ namespace InstaAPI.Tests.Controllers
             var result = controller.Response;
 
             // Assert
-            Assert.IsNotNull(result);
-            //Assert.AreEqual(Helpers.ConfigurationData.TitleHelp, result.ViewBag.Title);
+            Assert.IsNotNull(result);            
         }
     }
 }
