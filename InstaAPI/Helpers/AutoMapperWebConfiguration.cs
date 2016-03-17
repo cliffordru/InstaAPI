@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using InstaAPI.Models;
-using InstaAPI.Services.DomainModel;
+using InstaAPI.Services.DomainModel.Instragram;
 
 namespace InstaAPI.Helpers
 {
@@ -19,7 +19,7 @@ namespace InstaAPI.Helpers
     {
         protected override void Configure()
         {
-            Mapper.CreateMap<InstaPostsData, PostsTagViewModel>()
+            Mapper.CreateMap<InstaPostData, PostsTagViewModel>()
                 .ForMember(dest => dest.InstagramId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username))
                 .ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Link));

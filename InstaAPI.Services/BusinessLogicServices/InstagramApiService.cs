@@ -1,10 +1,10 @@
 ﻿using InstaAPI.Services.BusinessLogicServices.Interfaces;
-using InstaAPI.Services.DomainModel;
 using Newtonsoft.Json;
 using System;
 using System.Configuration;
 using System.Net.Http;
 using System.Threading.Tasks;
+using InstaAPI.Services.DomainModel.Instragram;
 
 namespace InstaAPI.Services.BusinessLogicServices
 {
@@ -12,12 +12,17 @@ namespace InstaAPI.Services.BusinessLogicServices
     {
         private readonly string _clientId = ConfigurationManager.AppSettings["InstagramClientId"];
         private readonly string _baseUri = "https://api.instagram.com/v1/";
-        InstaPosts IInstagramApiService.GetPostsByTag(string tag)
+        InstaPostsRoot IInstagramApiService.GetPostsByTag(string tag)
         {            
-            return GetRecent(tag).Result;            
+            return GetPostsByTagAsync(tag).Result;            
         }
-        
-        private async Task<InstaPosts> GetRecent(string tag)
+
+        InstaPostRoot IInstagramApiService.GetPost(string instagramId)
+        {
+            return GetPostAsync(instagramId).Result;
+        }        
+
+        private async Task<InstaPostsRoot> GetPostsByTagAsync(string tag)
         {
             var jsonString = "";
             using (var client = new HttpClient())
@@ -35,24 +40,26 @@ namespace InstaAPI.Services.BusinessLogicServices
                 }
             }
 
-            return JsonConvert.DeserializeObject<InstaPosts>(jsonString);
+            return JsonConvert.DeserializeObject<InstaPostsRoot>(jsonString);            
+        }
 
-            //InstaMedia model;
-            
-            //using (var client = new HttpClient())
-            //{
-            //    client.BaseAddress = new Uri(_baseUri);
-            //    using (
-            //        var response = await client.GetAsync(
-            //                   $"tags/{tag}/media/recent?client_id={_clientId}", HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
-            //        )
-            //    {
-            //        var jsonString = await response.Content.ReadAsStringAsync();                   
-            //        model = JsonConvert.DeserializeObject<InstaMedia>(jsonString);
-            //    }
-            //}
-                       
-            //return model;
+        private async Task<InstaPostRoot> GetPostAsync(string instagramId)
+        {
+            var jsonString = "";
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_baseUri);
+
+                var response = await client.GetAsync($"media/{instagramId}?client_id={_clientId}"
+                    , HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    jsonString = await response.Content.ReadAsStringAsync();
+                }
+            }
+
+            return JsonConvert.DeserializeObject<InstaPostRoot>(jsonString);
         }
     }
 }

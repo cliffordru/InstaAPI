@@ -58,7 +58,7 @@
     <Compile Include="BusinessLogicServices\Interfaces\IInstagramApiService.cs" />
     <Compile Include="DatabaseContext\FavoriteFluentMap.cs" />
     <Compile Include="DatabaseContext\FavoriteManagementDbContext.cs" />
-    <Compile Include="DomainModel\InstaPosts.cs" />
+    <Compile Include="DomainModel\Instragram\InstaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DomainModel\Favorite.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />

@@ -16,6 +16,9 @@ namespace InstaAPI.Services.DatabaseContext
             Property(m => m.Id).IsRequired();
             HasKey(m => m.Id);
             Property(m => m.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            Property(m => m.UserId).IsRequired();
+            Property(m => m.InstagramId).IsRequired();
+            Property(m => m.TagName).IsRequired();
 
         }
     }

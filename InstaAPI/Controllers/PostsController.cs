@@ -4,8 +4,10 @@ using InstaAPI.Models;
 using InstaAPI.Services.BusinessLogicServices;
 using InstaAPI.Services.BusinessLogicServices.Interfaces;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Http;
 using InstaAPI.Services.CommandModel;
+using Microsoft.AspNet.Identity;
 
 namespace InstaAPI.Controllers
 {
@@ -49,14 +51,14 @@ namespace InstaAPI.Controllers
         public IHttpActionResult Post([FromBody]PostsFavoriteBindingModel model)
         {
             // TODO: See AccountController.Register for return type
-            // TODO: Map model to domain DTO
+            // TODO: Map model to domain DTO automapper
 
             //var result = _instagramApiService.GetPostsByTag(model.Tag);
             //var vm = Mapper.Map<List<PostsTagViewModel>>(result.Data);
 
             //var id = model.InstagramId;
             //var userid = HttpContext.Current.User.Identity.GetUserId();
-            _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() {Id = 1});
+            _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() {UserId = HttpContext.Current.User.Identity.GetUserId(), InstagramId = model.InstagramId, TagName = model.TagName});
 
             return Ok();
         }

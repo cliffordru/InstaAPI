@@ -1,10 +1,12 @@
-﻿using InstaAPI.Services.DomainModel;
+﻿using InstaAPI.Services.DomainModel.Instragram;
 
 namespace InstaAPI.Services.BusinessLogicServices.Interfaces
 {
     public interface IInstagramApiService
     {
-        InstaPosts GetPostsByTag(string tag);
-            
+        InstaPostsRoot GetPostsByTag(string tag);
+
+        InstaPostRoot GetPost(string instagramId);
+
     }
 }

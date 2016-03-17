@@ -34,8 +34,7 @@ namespace InstaAPI.Helpers
             builder.RegisterType<FavoriteCreationService>().As<IFavoriteCreationService>().InstancePerRequest();
             builder.RegisterType<FavoriteRepository>().As<IFavoriteRepository>().InstancePerRequest();
             builder.RegisterType<DbContextScopeFactory>().As<IDbContextScopeFactory>().InstancePerRequest();
-            builder.RegisterType<AmbientDbContextLocator>().As<IAmbientDbContextLocator>().InstancePerRequest();
-            
+            builder.RegisterType<AmbientDbContextLocator>().As<IAmbientDbContextLocator>().InstancePerRequest();            
         }
     }
 }

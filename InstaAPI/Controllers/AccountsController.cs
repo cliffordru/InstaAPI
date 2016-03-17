@@ -43,7 +43,7 @@ namespace InstaAPI.Controllers
         }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
-        
+
         //[Route("token")]
         //[HttpDelete]
         //public IHttpActionResult Logout()
