@@ -1,4 +1,4 @@
 # InstaApi
 API for Instagram
 
-Copy Right Clifford Gray 2016, All rights reserved.
+Copy Right 2016 - Clifford Gray, All rights reserved.
