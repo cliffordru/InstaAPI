@@ -1,11 +1,9 @@
 ﻿using InstaAPI.Models;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -22,7 +20,7 @@ namespace InstaAPI.Controllers
     public class AccountsController : BaseApiController
     {
         private ApplicationUserManager _userManager;
-
+        
         public AccountsController()
         {
         }

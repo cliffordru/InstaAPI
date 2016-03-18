@@ -20,7 +20,9 @@ namespace InstaAPI.Helpers
     {
         protected override void Configure()
         {
+#pragma warning disable 618
             Mapper.CreateMap<InstaPostData, PostsTagViewModel>()
+
                 .ForMember(dest => dest.InstagramId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Username, opt => opt.MapFrom(src => src.User.Username))
                 .ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Link));
@@ -34,6 +36,7 @@ namespace InstaAPI.Helpers
             Mapper.CreateMap<FavoriteMetric, PostsFavoriteMetricsViewModel>()         
                 .ForMember(dest => dest.TagName, opt => opt.MapFrom(src => src.TagName))
                 .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Count));
+#pragma warning restore 618
         }
     }
 }
