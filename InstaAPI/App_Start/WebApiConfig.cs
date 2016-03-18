@@ -1,5 +1,7 @@
 ﻿using Microsoft.Owin.Security.OAuth;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
+using InstaAPI.Helpers;
 
 namespace InstaAPI
 {
@@ -11,6 +13,7 @@ namespace InstaAPI
             // Configure Web API to use only bearer token authentication.
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
 
             // Web API routes
             config.MapHttpAttributeRoutes();

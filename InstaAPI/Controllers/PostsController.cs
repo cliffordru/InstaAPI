@@ -54,9 +54,6 @@ namespace InstaAPI.Controllers
         [ValidateModel]
         public IHttpActionResult Post([FromBody]PostsFavoriteBindingModel model)
         {
-            // TODO: See AccountController.Register for return type
-            // TODO: Map model to domain DTO automapper
-
             _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() {UserId = GetUser().Id, InstagramId = model.InstagramId, TagName = model.TagName});
 
             return Ok(); //TODO:201 on success
