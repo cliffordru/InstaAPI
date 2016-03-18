@@ -31,7 +31,7 @@ namespace InstaAPI
             PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
-                TokenEndpointPath = new PathString("/api/accounts/token"), // replaces /Token
+                TokenEndpointPath = new PathString("/Token"), // Using Account controller (login) api/accounts/token for token generation 
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),

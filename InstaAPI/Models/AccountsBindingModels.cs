@@ -5,31 +5,31 @@ namespace InstaAPI.Models
 {
     // Models used as parameters to AccountController actions.
 
-    public class LoginModel
-    {
-        [Required]
-        [Display(Name = "grant_type")]
-        [JsonProperty(PropertyName = "grant_type")]
-        public string GrantType { get; set; }
+    //public class LoginModel
+    //{
+    //    //[Required]
+    //    //[Display(Name = "grant_type")]
+    //    //[JsonProperty(PropertyName = "grant_type")]
+    //    //public string GrantType { get; set; }
 
-        [Required]
-        [Display(Name = "username")]
-        [JsonProperty(PropertyName = "username")]
-        public string Username { get; set; }
+    //    [Required]
+    //    [Display(Name = "username")]
+    //    [JsonProperty(PropertyName = "username")]
+    //    public string Username { get; set; }
 
-        [Required]        
-        [Display(Name = "password")]
-        [JsonProperty(PropertyName = "password")]
-        public string Password { get; set; }
+    //    [Required]        
+    //    [Display(Name = "password")]
+    //    [JsonProperty(PropertyName = "password")]
+    //    public string Password { get; set; }
 
        
-    }
+    //}
 
-    public class RegisterBindingModel
+    public class AccountBindingModel
     {
         [Required]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        [Display(Name = "username")]
+        public string Username { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -37,10 +37,10 @@ namespace InstaAPI.Models
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+        //[DataType(DataType.Password)]
+        //[Display(Name = "Confirm password")]
+        //[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        //public string ConfirmPassword { get; set; }
     }
 
     public class RegisterExternalBindingModel

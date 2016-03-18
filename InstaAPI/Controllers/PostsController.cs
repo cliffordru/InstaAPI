@@ -47,7 +47,7 @@ namespace InstaAPI.Controllers
 
         /// <summary>
         /// Save a post as a favorite. Requires access_token in header. 
-        /// Parameters -> instagram_id, tag_name
+        /// Parameters {instagram_id, tag_name}
         /// </summary>        
         /// <returns></returns>
         [Route("favorite")]
@@ -56,8 +56,8 @@ namespace InstaAPI.Controllers
         {
             // TODO: See AccountController.Register for return type
             // TODO: Map model to domain DTO automapper
-            
-            _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() {UserId = HttpContext.Current.User.Identity.GetUserId(), InstagramId = model.InstagramId, TagName = model.TagName});
+
+            _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() {UserId = GetUser().Id, InstagramId = model.InstagramId, TagName = model.TagName});
 
             return Ok(); //TODO:201 on success
         }
@@ -69,8 +69,8 @@ namespace InstaAPI.Controllers
         [Route("favorites")]
         public IHttpActionResult GetFavorites()
         {
-            var result = _favoriteQueryService.GetFavorites(HttpContext.Current.User.Identity.GetUserId());
-            var vm = Mapper.Map<List<Favorite>>(result);
+            var result = _favoriteQueryService.GetFavorites(GetUser().Id);
+            var vm = Mapper.Map<List<PostsFavoriteViewModel>>(result);
 
             return Json(vm);
         }
@@ -82,8 +82,8 @@ namespace InstaAPI.Controllers
         [Route("favorites/metrics")]
         public IHttpActionResult GetMetrics()
         {
-            var result = _favoriteQueryService.GetMetrics(HttpContext.Current.User.Identity.GetUserId());
-            var vm = Mapper.Map<List<FavoriteMetric>>(result);
+            var result = _favoriteQueryService.GetMetrics(GetUser().Id);
+            var vm = Mapper.Map<List<PostsFavoriteMetricsViewModel>>(result);
 
             return Json(vm);
         }

@@ -3,11 +3,15 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
+using Microsoft.Owin.Infrastructure;
 
 namespace InstaAPI.Controllers
 {
@@ -28,70 +32,77 @@ namespace InstaAPI.Controllers
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager ?? Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
+        }        
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // POST api/Account/Login
         /// <summary>
-        /// Get an access token for the API.  
-        /// Requires the parameters to be sent using x-www-form-urlencoded. 
-        /// Parameters -> username, password
-        /// </summary>
-        /// <param name="grant_type">valid value is password</param>
+        /// Get an access token for the API.         
+        /// Parameters {username, password}
+        /// </summary>        
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [Route("token")]
-        public IHttpActionResult Login(LoginModel model)
+        public IHttpActionResult Login(AccountBindingModel model)
         {
-            /* Placeholder for /Token route - Startup.Auth.cs is where actual TokenEndpointPath is defined
-               This Action Method never actually fires, just a placeholder for documentation
-            */
-            return Ok();
+            return ResponseMessage(GenerateToken(model));
         }
 
         // POST api/Account/Register
         /// <summary>
         /// Register an account for the API.  
-        /// <para />Parameters -> email, password, confirmpassword
+        /// Parameters {username, password}
         /// </summary>
-        /// <param name="model"></param>
+        /// <param name="username"></param>
+        /// /// <param name="password"></param>
         /// <returns></returns>
         [AllowAnonymous]
         [Route("new")]
-        public async Task<IHttpActionResult> Registration(RegisterBindingModel model)
+        public async Task<IHttpActionResult> Registration(AccountBindingModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            var user = new ApplicationUser() { UserName = model.Username, Email = model.Username };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
-
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);            
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
-            return Ok();
+            return ResponseMessage(GenerateToken(model));
+            
         }
-        
+
+        private HttpResponseMessage GenerateToken(AccountBindingModel model)
+        {
+            var identity = new ClaimsIdentity(Startup.OAuthOptions.AuthenticationType);
+            identity.AddClaim(new Claim(ClaimTypes.Name, model.Username));            
+            var ticket = new AuthenticationTicket(identity, new AuthenticationProperties());
+            var currentUtc = new SystemClock().UtcNow;
+            ticket.Properties.IssuedUtc = currentUtc;
+            ticket.Properties.ExpiresUtc = currentUtc.Add(TimeSpan.FromMinutes(2880));//TimeSpan.FromDays(2)
+            var token = Startup.OAuthOptions.AccessTokenFormat.Protect(ticket);
+
+            return new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new ObjectContent<object>(new
+                {                    
+                    access_token = token,
+                    token_type = "bearer",                    
+                    user_name = model.Username,
+                    issued = ticket.Properties.IssuedUtc,
+                    expires = ticket.Properties.ExpiresUtc
+                }, Configuration.Formatters.JsonFormatter)
+            };
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)

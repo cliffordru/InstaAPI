@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using InstaAPI.Context;
@@ -34,7 +35,7 @@ namespace InstaAPI.Services.BusinessLogicServices
                 var dbContext = dbContextScope.DbContexts.Get<FavoriteManagementDbContext>();
                 var favorites = (from f in dbContext.Favorites
                                  where f.UserId == userId
-                    select f).ToList();
+                    select f).Include(o => o.Post).ToList();
                 
                 return favorites;
             }            
