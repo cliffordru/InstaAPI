@@ -12,10 +12,10 @@ namespace InstaAPI.Helpers
     {
         public override void Handle(ExceptionHandlerContext context)
         {
-            //TODO: Add logging, finer grained info based on exception type, etc.
+            //TODO: Add logging, finer grained info based on exception type, etc.            
 
             var compilationSection = (CompilationSection)System.Configuration.ConfigurationManager.GetSection(@"system.web/compilation");
-            var content = "If you continue to receive this message, please contact us!";
+            var content = ConfigurationData.ErrorMessage;
             
             
             if (compilationSection.Debug)
@@ -23,12 +23,14 @@ namespace InstaAPI.Helpers
                 content = context.Exception.ToString();
             }
 
+            var test = context.Exception;
+
             //var result = new HttpResponseMessage(HttpStatusCode.InternalServerError) 
             //{               
             //    ReasonPhrase = "An Unexpected error occured."
             //};
 
-            var customError = new CustomError() {Info = "An unexpected error has occured.", Message = content};
+            var customError = new CustomError() {Info = ConfigurationData.ErrorInfo, Message = content};
 
             var jsonType = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             var response = context.Request.CreateResponse(HttpStatusCode.InternalServerError, customError, jsonType);
