@@ -42,8 +42,9 @@ WHERE	r.CountryId = 1
 GROUP BY RegionName
 
 --- Show the % of people that have multiple addresses
-SELECT	p.PersonId, p.FirstName, p.LastName		
-		, SUM(COUNT(DISTINCT p.PersonId)) over() * 100.0 / (SELECT COUNT(*) FROM Person)
+SELECT	DISTINCT 
+		--p.PersonId, p.FirstName, p.LastName,
+		SUM(COUNT(DISTINCT p.PersonId)) over() * 100.0 / (SELECT COUNT(*) FROM Person)
 FROM	dbo.Person p
 JOIN	dbo.PersonAddress pa ON p.PersonId = pa.PersonId
 --JOIN	dbo.[Address] a ON pa.AddressId = a.AddressId
