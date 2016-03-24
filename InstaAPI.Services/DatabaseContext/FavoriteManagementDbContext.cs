@@ -1,7 +1,7 @@
-﻿using System.Configuration;
+﻿using InstaAPI.Services.DomainModel;
+using System.Configuration;
 using System.Data.Entity;
 using System.Reflection;
-using InstaAPI.Services.DomainModel;
 
 namespace InstaAPI.Services.DatabaseContext
 {
@@ -12,7 +12,7 @@ namespace InstaAPI.Services.DatabaseContext
         public DbSet<Post> Posts { get; set; }
 
         public FavoriteManagementDbContext() : base(ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString())
-		{ }
+        { }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -26,6 +26,6 @@ namespace InstaAPI.Context
     /// </remarks>
     public interface IDbContextFactory
     {
-		TDbContext CreateDbContext<TDbContext>() where TDbContext : DbContext;
+        TDbContext CreateDbContext<TDbContext>() where TDbContext : DbContext;
     }
 }

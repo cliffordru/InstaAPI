@@ -1,18 +1,16 @@
-﻿using System;
+﻿using InstaAPI.Services.DomainModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Infrastructure.Annotations;
-using System.Data.Entity.ModelConfiguration;
-using InstaAPI.Services.DomainModel;
 
 namespace InstaAPI.Services.DatabaseContext
 {
     public class FavoriteFluentMap : BaseMap<Favorite> // EntityTypeConfiguration
     {
         public FavoriteFluentMap()
-        {            
+        {
             Property(m => m.Id).IsRequired();
             HasKey(m => m.Id);
-            Property(m => m.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);                                              
+            Property(m => m.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
             Property(m => m.UserId).HasMaxLength(UserIdMaxLen).IsRequired();
             Property(m => m.InstagramId).HasMaxLength(InstagramIdMaxLen).IsRequired();
             Property(m => m.TagName).HasMaxLength(TagNameMaxLen).IsRequired();
@@ -37,7 +35,7 @@ namespace InstaAPI.Services.DatabaseContext
             Property(m => m.InstagramId).HasMaxLength(InstagramIdMaxLen).IsRequired();
             HasKey(m => m.InstagramId);
             Property(m => m.InstagramUserId).HasMaxLength(InstagramUserIdMaxLen).IsRequired();
-            Property(m => m.InstagramUserName).HasMaxLength(InstagramUserNameMaxLen).IsRequired();            
+            Property(m => m.InstagramUserName).HasMaxLength(InstagramUserNameMaxLen).IsRequired();
         }
     }
 }

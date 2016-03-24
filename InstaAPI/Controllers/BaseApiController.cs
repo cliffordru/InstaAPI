@@ -1,8 +1,8 @@
-﻿using System.Net.Http;
-using System.Web.Http;
-using InstaAPI.Models;
+﻿using InstaAPI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System.Net.Http;
+using System.Web.Http;
 
 namespace InstaAPI.Controllers
 {

@@ -13,7 +13,7 @@ namespace InstaAPI.Helpers
             {
                 cfg.AddProfile(new PostsTagProfile());
             });
-        }        
+        }
     }
 
     public class PostsTagProfile : Profile
@@ -33,7 +33,7 @@ namespace InstaAPI.Helpers
                 .ForMember(dest => dest.Url, opt => opt.MapFrom(src => src.Post.Url))
                 .ForMember(dest => dest.TagName, opt => opt.MapFrom(src => src.TagName));
 
-            Mapper.CreateMap<FavoriteMetric, PostsFavoriteMetricsViewModel>()         
+            Mapper.CreateMap<FavoriteMetric, PostsFavoriteMetricsViewModel>()
                 .ForMember(dest => dest.TagName, opt => opt.MapFrom(src => src.TagName))
                 .ForMember(dest => dest.Count, opt => opt.MapFrom(src => src.Count));
 #pragma warning restore 618

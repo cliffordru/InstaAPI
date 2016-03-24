@@ -1,7 +1,4 @@
-﻿using System.Reflection;
-using System.Web.Http;
-using System.Web.Mvc;
-using Autofac;
+﻿using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
 using InstaAPI.Context;
@@ -9,6 +6,9 @@ using InstaAPI.Services.BusinessLogicServices;
 using InstaAPI.Services.BusinessLogicServices.Interfaces;
 using InstaAPI.Services.Repositories;
 using InstaAPI.Services.Repositories.Interfaces;
+using System.Reflection;
+using System.Web.Http;
+using System.Web.Mvc;
 
 namespace InstaAPI.Helpers
 {
@@ -35,7 +35,7 @@ namespace InstaAPI.Helpers
             builder.RegisterType<FavoriteQueryService>().As<IFavoriteQueryService>().InstancePerRequest();
             builder.RegisterType<FavoriteRepository>().As<IFavoriteRepository>().InstancePerRequest();
             builder.RegisterType<DbContextScopeFactory>().As<IDbContextScopeFactory>().InstancePerRequest();
-            builder.RegisterType<AmbientDbContextLocator>().As<IAmbientDbContextLocator>().InstancePerRequest();            
+            builder.RegisterType<AmbientDbContextLocator>().As<IAmbientDbContextLocator>().InstancePerRequest();
         }
     }
 }

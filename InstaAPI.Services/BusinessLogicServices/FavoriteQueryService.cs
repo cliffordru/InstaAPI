@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.IO;
-using System.Linq;
-using InstaAPI.Context;
+﻿using InstaAPI.Context;
 using InstaAPI.Services.BusinessLogicServices.Interfaces;
 using InstaAPI.Services.DatabaseContext;
 using InstaAPI.Services.DomainModel;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 
 namespace InstaAPI.Services.BusinessLogicServices
 {
@@ -16,7 +15,7 @@ namespace InstaAPI.Services.BusinessLogicServices
 
         public FavoriteQueryService(IDbContextScopeFactory dbContextScopeFactory)
         {
-            if (dbContextScopeFactory == null) throw new ArgumentNullException(nameof(dbContextScopeFactory));            
+            if (dbContextScopeFactory == null) throw new ArgumentNullException(nameof(dbContextScopeFactory));
             _dbContextScopeFactory = dbContextScopeFactory;
         }
 
@@ -35,10 +34,10 @@ namespace InstaAPI.Services.BusinessLogicServices
                 var dbContext = dbContextScope.DbContexts.Get<FavoriteManagementDbContext>();
                 var favorites = (from f in dbContext.Favorites
                                  where f.UserId == userId
-                    select f).Include(o => o.Post).ToList();
-                
+                                 select f).Include(o => o.Post).ToList();
+
                 return favorites;
-            }            
+            }
         }
 
         List<FavoriteMetric> IFavoriteQueryService.GetMetrics(string userId)
@@ -48,8 +47,8 @@ namespace InstaAPI.Services.BusinessLogicServices
                 var dbContext = dbContextScope.DbContexts.Get<FavoriteManagementDbContext>();
                 var metrics = (from f in dbContext.Favorites
                                where f.UserId == userId
-                               group f by f.TagName into g
-                                 select new FavoriteMetric() {TagName = g.Key, Count = g.Count()}).ToList();
+                               group f by new { f.TagName} into g
+                               select new FavoriteMetric() { TagName = g.Key.TagName, Count = g.Count() }).ToList();
 
                 return metrics;
             }

@@ -10,7 +10,7 @@ namespace InstaAPI.Context
 
         public DbContextReadOnlyScope(IDbContextFactory dbContextFactory = null)
             : this(joiningOption: DbContextScopeOption.JoinExisting, isolationLevel: null, dbContextFactory: dbContextFactory)
-        {}
+        { }
 
         public DbContextReadOnlyScope(IsolationLevel isolationLevel, IDbContextFactory dbContextFactory = null)
             : this(joiningOption: DbContextScopeOption.ForceCreateNew, isolationLevel: isolationLevel, dbContextFactory: dbContextFactory)

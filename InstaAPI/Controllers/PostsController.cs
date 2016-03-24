@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using InstaAPI.Filters;
 using InstaAPI.Models;
-using InstaAPI.Services.BusinessLogicServices;
 using InstaAPI.Services.BusinessLogicServices.Interfaces;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.Http;
 using InstaAPI.Services.CommandModel;
-using InstaAPI.Services.DomainModel;
-using Microsoft.AspNet.Identity;
+using System.Collections.Generic;
+using System.Web.Http;
 
 namespace InstaAPI.Controllers
 {
@@ -38,7 +34,7 @@ namespace InstaAPI.Controllers
         [Route("tag/{tag_name}")]
         [ValidateModel]
         public IHttpActionResult Get([FromUri]PostsTagBindingModel model)
-        {            
+        {
             var result = _instagramApiService.GetPostsByTag(model.tag_name);
             var vm = Mapper.Map<List<PostsTagViewModel>>(result.Data);
 
@@ -54,7 +50,7 @@ namespace InstaAPI.Controllers
         [ValidateModel]
         public IHttpActionResult Post([FromBody]PostsFavoriteBindingModel model)
         {
-            _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() {UserId = GetUser().Id, InstagramId = model.InstagramId, TagName = model.TagName});
+            _favoriteCreationService.CreateFavorite(new FavoriteCreationSpec() { UserId = GetUser().Id, InstagramId = model.InstagramId, TagName = model.TagName });
 
             return Ok(); //TODO:201 on success
         }

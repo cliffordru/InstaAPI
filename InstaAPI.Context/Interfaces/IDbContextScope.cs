@@ -69,21 +69,21 @@ namespace InstaAPI.Context
         /// </summary>
         void RefreshEntitiesInParentScope(IEnumerable entities);
 
-		/// <summary>
-		/// Reloads the provided persistent entities from the data store
-		/// in the DbContext instances managed by the parent scope. 
-		/// 
-		/// If there is no parent scope (i.e. if this DbContextScope
-		/// if the top-level scope), does nothing.
-		/// 
-		/// This is useful when you have forced the creation of a new
-		/// DbContextScope and want to make sure that the parent scope
-		/// (if any) is aware of the entities you've modified in the 
-		/// inner scope.
-		/// 
-		/// (this is a pretty advanced feature that should be used 
-		/// with parsimony). 
-		/// </summary>
+        /// <summary>
+        /// Reloads the provided persistent entities from the data store
+        /// in the DbContext instances managed by the parent scope. 
+        /// 
+        /// If there is no parent scope (i.e. if this DbContextScope
+        /// if the top-level scope), does nothing.
+        /// 
+        /// This is useful when you have forced the creation of a new
+        /// DbContextScope and want to make sure that the parent scope
+        /// (if any) is aware of the entities you've modified in the 
+        /// inner scope.
+        /// 
+        /// (this is a pretty advanced feature that should be used 
+        /// with parsimony). 
+        /// </summary>
         Task RefreshEntitiesInParentScopeAsync(IEnumerable entities);
 
         /// <summary>

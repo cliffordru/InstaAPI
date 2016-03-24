@@ -1,9 +1,9 @@
-using System;
 using InstaAPI.Context;
 using InstaAPI.Services.BusinessLogicServices.Interfaces;
 using InstaAPI.Services.CommandModel;
 using InstaAPI.Services.DomainModel;
 using InstaAPI.Services.Repositories.Interfaces;
+using System;
 
 namespace InstaAPI.Services.BusinessLogicServices
 {
@@ -35,11 +35,11 @@ namespace InstaAPI.Services.BusinessLogicServices
                 var favorite = _favoritesRepository.Get(favoriteToCreate.UserId, favoriteToCreate.InstagramId,
                     favoriteToCreate.TagName);
 
-                //TODO: If exists consider returning 409 
+                //TODO: If exists consider returning 409, 302, etc instead of 200
                 if (favorite == null)
                 {
                     var post = _favoritesRepository.Get(favoriteToCreate.InstagramId);
-                    
+
                     if (post == null)
                     {
                         var instaPostData = _instagramApiService.GetPost(favoriteToCreate.InstagramId);

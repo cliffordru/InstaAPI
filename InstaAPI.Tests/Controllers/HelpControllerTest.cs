@@ -16,7 +16,7 @@ namespace InstaAPI.Tests.Controllers
             var result = controller.Response;
 
             // Assert
-            Assert.IsNotNull(result);            
+            Assert.IsNotNull(result);
         }
     }
 }

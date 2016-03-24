@@ -23,7 +23,7 @@ namespace InstaAPI.Context
     public class DbContextCollection : IDbContextCollection
     {
         private Dictionary<Type, DbContext> _initializedDbContexts;
-        private Dictionary<DbContext, DbContextTransaction> _transactions; 
+        private Dictionary<DbContext, DbContextTransaction> _transactions;
         private IsolationLevel? _isolationLevel;
         private readonly IDbContextFactory _dbContextFactory;
         private bool _disposed;
@@ -74,7 +74,7 @@ namespace InstaAPI.Context
                 }
             }
 
-            return _initializedDbContexts[requestedType]  as TDbContext;
+            return _initializedDbContexts[requestedType] as TDbContext;
         }
 
         public int Commit()

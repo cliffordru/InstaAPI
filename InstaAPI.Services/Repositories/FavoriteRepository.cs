@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using InstaAPI.Context;
+﻿using InstaAPI.Context;
 using InstaAPI.Services.DatabaseContext;
 using InstaAPI.Services.DomainModel;
 using InstaAPI.Services.Repositories.Interfaces;
+using System;
+using System.Linq;
 
 namespace InstaAPI.Services.Repositories
 {
@@ -39,10 +39,10 @@ namespace InstaAPI.Services.Repositories
         Favorite IFavoriteRepository.Get(string userid, string instagramId, string tagname)
         {
             return (from f in DbContext.Favorites
-                where f.UserId == userid
-                      && f.InstagramId == instagramId
-                      && f.TagName == tagname
-                select f).SingleOrDefault();
+                    where f.UserId == userid
+                          && f.InstagramId == instagramId
+                          && f.TagName == tagname
+                    select f).SingleOrDefault();
         }
 
         Post IFavoriteRepository.Get(string instagramId)

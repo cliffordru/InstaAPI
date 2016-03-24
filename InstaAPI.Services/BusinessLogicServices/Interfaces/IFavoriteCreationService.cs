@@ -1,5 +1,4 @@
-﻿using InstaAPI.Context;
-using InstaAPI.Services.CommandModel;
+﻿using InstaAPI.Services.CommandModel;
 
 namespace InstaAPI.Services.BusinessLogicServices.Interfaces
 {

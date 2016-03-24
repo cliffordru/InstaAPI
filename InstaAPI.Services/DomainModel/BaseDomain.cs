@@ -8,7 +8,7 @@ namespace InstaAPI.Services.DomainModel
         private PropertyInfo[] _propertyInfos;
 
         public override string ToString()
-        {         
+        {
             if (_propertyInfos == null)
                 _propertyInfos = GetType().GetProperties();
 
@@ -21,6 +21,6 @@ namespace InstaAPI.Services.DomainModel
             }
 
             return sb.ToString();
-        }   
+        }
     }
 }

@@ -1,15 +1,15 @@
 ﻿using InstaAPI.Models;
 using Microsoft.AspNet.Identity;
+using Microsoft.Owin.Infrastructure;
 using Microsoft.Owin.Security;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using Microsoft.Owin.Infrastructure;
+#pragma warning disable 1573
+#pragma warning disable 1584,1711,1572,1581,1580
 
 namespace InstaAPI.Controllers
 {
@@ -20,7 +20,7 @@ namespace InstaAPI.Controllers
     public class AccountsController : BaseApiController
     {
         private ApplicationUserManager _userManager;
-        
+
         public AccountsController()
         {
         }
@@ -30,7 +30,7 @@ namespace InstaAPI.Controllers
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
-        }        
+        }
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
@@ -68,32 +68,32 @@ namespace InstaAPI.Controllers
 
             var user = new ApplicationUser() { UserName = model.Username, Email = model.Username };
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);            
+            var result = await UserManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);
             }
 
             return ResponseMessage(GenerateToken(model));
-            
+
         }
 
         private HttpResponseMessage GenerateToken(AccountBindingModel model)
         {
             var identity = new ClaimsIdentity(Startup.OAuthOptions.AuthenticationType);
-            identity.AddClaim(new Claim(ClaimTypes.Name, model.Username));            
+            identity.AddClaim(new Claim(ClaimTypes.Name, model.Username));
             var ticket = new AuthenticationTicket(identity, new AuthenticationProperties());
             var currentUtc = new SystemClock().UtcNow;
             ticket.Properties.IssuedUtc = currentUtc;
-            ticket.Properties.ExpiresUtc = currentUtc.Add(TimeSpan.FromMinutes(2880));//TimeSpan.FromDays(2)
+            ticket.Properties.ExpiresUtc = currentUtc.Add(TimeSpan.FromDays(14));
             var token = Startup.OAuthOptions.AccessTokenFormat.Protect(ticket);
 
             return new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new ObjectContent<object>(new
-                {                    
+                {
                     access_token = token,
-                    token_type = "bearer",                    
+                    token_type = "bearer",
                     user_name = model.Username,
                     issued = ticket.Properties.IssuedUtc,
                     expires = ticket.Properties.ExpiresUtc
@@ -112,12 +112,7 @@ namespace InstaAPI.Controllers
             base.Dispose(disposing);
         }
 
-        #region Helpers
-
-        private IAuthenticationManager Authentication
-        {
-            get { return Request.GetOwinContext().Authentication; }
-        }
+        #region Helpers        
 
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
@@ -130,7 +125,7 @@ namespace InstaAPI.Controllers
             {
                 if (result.Errors != null)
                 {
-                    foreach (string error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error);
                     }
@@ -147,27 +142,36 @@ namespace InstaAPI.Controllers
 
             return null;
         }
-        
-        private static class RandomOAuthStateGenerator
-        {
-            private static readonly RandomNumberGenerator Random = new RNGCryptoServiceProvider();
 
-            public static string Generate(int strengthInBits)
-            {
-                const int bitsPerByte = 8;
-
-                if (strengthInBits % bitsPerByte != 0)
+        /*
+                private IAuthenticationManager Authentication
                 {
-                    throw new ArgumentException("strengthInBits must be evenly divisible by 8.", nameof(strengthInBits));
+                    get { return Request.GetOwinContext().Authentication; }
                 }
+        */
 
-                int strengthInBytes = strengthInBits / bitsPerByte;
+        /*
+                private static class RandomOAuthStateGenerator
+                {
+                    private static readonly RandomNumberGenerator Random = new RNGCryptoServiceProvider();
 
-                byte[] data = new byte[strengthInBytes];
-                Random.GetBytes(data);
-                return HttpServerUtility.UrlTokenEncode(data);
-            }
-        }
+                    public static string Generate(int strengthInBits)
+                    {
+                        const int bitsPerByte = 8;
+
+                        if (strengthInBits % bitsPerByte != 0)
+                        {
+                            throw new ArgumentException("strengthInBits must be evenly divisible by 8.", nameof(strengthInBits));
+                        }
+
+                        int strengthInBytes = strengthInBits / bitsPerByte;
+
+                        byte[] data = new byte[strengthInBytes];
+                        Random.GetBytes(data);
+                        return HttpServerUtility.UrlTokenEncode(data);
+                    }
+                }
+        */
 
         #endregion
     }

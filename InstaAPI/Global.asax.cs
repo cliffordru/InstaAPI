@@ -1,12 +1,12 @@
-﻿using System;
-using InstaAPI.Helpers;
+﻿using InstaAPI.Helpers;
+using Newtonsoft.Json;
+using System;
+using System.Web;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using System.Web;
-using System.Web.Configuration;
-using Newtonsoft.Json;
 
 namespace InstaAPI
 {
@@ -14,7 +14,7 @@ namespace InstaAPI
     {
         protected void Application_Error(object sender, EventArgs e)
         {
-            var ex = Server.GetLastError();            
+            var ex = Server.GetLastError();
             var httpException = ex as HttpException;
             var info = ConfigurationData.ErrorInfo;
             var message = ConfigurationData.ErrorMessage;
@@ -37,9 +37,10 @@ namespace InstaAPI
                 message += ex.ToString();
             }
 
-            var customError = new GlobalExceptionHandler.CustomError() { Info = info, Message = message };           
+            var customError = new GlobalExceptionHandler.CustomApiError() { Info = info, Message = message };
             var json = JsonConvert.SerializeObject(customError);
 
+            Server.ClearError();
             Response.Clear();
             Response.StatusCode = statusCode;
             Response.Write(json);

@@ -25,11 +25,11 @@ namespace InstaAPI.Context
 
         public DbContextScope(IDbContextFactory dbContextFactory = null) :
             this(joiningOption: DbContextScopeOption.JoinExisting, readOnly: false, isolationLevel: null, dbContextFactory: dbContextFactory)
-        {}
+        { }
 
         public DbContextScope(bool readOnly, IDbContextFactory dbContextFactory = null)
             : this(joiningOption: DbContextScopeOption.JoinExisting, readOnly: readOnly, isolationLevel: null, dbContextFactory: dbContextFactory)
-        {}
+        { }
 
         public DbContextScope(DbContextScopeOption joiningOption, bool readOnly, IsolationLevel? isolationLevel, IDbContextFactory dbContextFactory = null)
         {
@@ -143,15 +143,15 @@ namespace InstaAPI.Context
             // entities from one DbContext instance to another. NHibernate has support for this sort of stuff 
             // but EF still lags behind in this respect. But there is hope: https://entityframework.codeplex.com/workitem/864
 
-			// NOTE: DbContext implements the ObjectContext property of the IObjectContextAdapter interface explicitely.
-			// So we must cast the DbContext instances to IObjectContextAdapter in order to access their ObjectContext.
-			// This cast is completely safe.
+            // NOTE: DbContext implements the ObjectContext property of the IObjectContextAdapter interface explicitely.
+            // So we must cast the DbContext instances to IObjectContextAdapter in order to access their ObjectContext.
+            // This cast is completely safe.
 
-			foreach (IObjectContextAdapter contextInCurrentScope in _dbContexts.InitializedDbContexts.Values)
+            foreach (IObjectContextAdapter contextInCurrentScope in _dbContexts.InitializedDbContexts.Values)
             {
                 var correspondingParentContext =
                     _parentScope._dbContexts.InitializedDbContexts.Values.SingleOrDefault(parentContext => parentContext.GetType() == contextInCurrentScope.GetType())
-					as IObjectContextAdapter;
+                    as IObjectContextAdapter;
 
                 if (correspondingParentContext == null)
                     continue; // No DbContext of this type has been created in the parent scope yet. So no need to refresh anything for this DbContext type.
@@ -196,17 +196,17 @@ namespace InstaAPI.Context
             if (_parentScope == null)
                 return;
 
-            if (_nested) 
+            if (_nested)
                 return;
 
-			foreach (IObjectContextAdapter contextInCurrentScope in _dbContexts.InitializedDbContexts.Values)
+            foreach (IObjectContextAdapter contextInCurrentScope in _dbContexts.InitializedDbContexts.Values)
             {
                 var correspondingParentContext =
                     _parentScope._dbContexts.InitializedDbContexts.Values.SingleOrDefault(parentContext => parentContext.GetType() == contextInCurrentScope.GetType())
-					as IObjectContextAdapter;
+                    as IObjectContextAdapter;
 
                 if (correspondingParentContext == null)
-                    continue; 
+                    continue;
 
                 foreach (var toRefresh in entities)
                 {
@@ -511,4 +511,3 @@ Stack Trace:
     { }
 }
 
-    
